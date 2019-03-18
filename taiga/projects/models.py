@@ -56,6 +56,10 @@ from . import choices
 
 from dateutil.relativedelta import relativedelta
 
+import string
+
+import random
+
 
 def get_project_logo_file_path(instance, filename):
     return get_file_path(instance, filename, "project")
@@ -294,7 +298,7 @@ class Project(ProjectDefaults, TaggedMixin, TagsColorsMixin, models.Model):
 
         if not self.slug:
             with advisory_lock("project-creation"):
-                base_slug = "{}-{}".format(self.owner.username, self.name)
+                base_slug = "".join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(8));
                 self.slug = slugify_uniquely(base_slug, self.__class__)
                 super().save(*args, **kwargs)
         else:
