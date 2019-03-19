@@ -298,8 +298,11 @@ class Project(ProjectDefaults, TaggedMixin, TagsColorsMixin, models.Model):
 
         if not self.slug:
             with advisory_lock("project-creation"):
-                base_slug = "".join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(8));
-                self.slug = slugify_uniquely(base_slug, self.__class__)
+                while True:
+                    potential = "".join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(8));
+                    if not self.__class__.objects.filter(slug=potential).exists():
+                        self.slug = potential
+                        break
                 super().save(*args, **kwargs)
         else:
             super().save(*args, **kwargs)
