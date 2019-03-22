@@ -30,6 +30,8 @@ from taiga.projects.notifications.mixins import WatchedModelMixin
 
 import itertools
 import datetime
+import string
+import random
 
 
 class Milestone(WatchedModelMixin, models.Model):
@@ -82,7 +84,11 @@ class Milestone(WatchedModelMixin, models.Model):
         if not self._importing or not self.modified_date:
             self.modified_date = timezone.now()
         if not self.slug:
-            self.slug = slugify_uniquely(self.name, self.__class__)
+            while True:
+                potential = "".join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(8));
+                if not self.__class__.objects.filter(slug=potential).exists():
+                    self.slug = potential
+                    break
         super().save(*args, **kwargs)
 
     @cached_property
