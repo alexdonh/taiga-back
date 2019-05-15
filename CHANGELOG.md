@@ -2,6 +2,29 @@
 
 ## Unreleased
 
+## 4.2.4 (2019-05-09)
+
+### Misc
+
+- Fix epics excluded filter (https://tree.taiga.io/project/taiga/issue/5727)
+- Avoid saving non integer user id's in history diffs
+- Upgrade requests dependence
+
+
+## 4.2.3 (2019-04-16)
+
+### Features:
+
+- Change tag filter behavour to 'or' operator
+
+### Misc
+
+- Change milestone query
+- Avoid getting non image thumbnails
+- Remove unnecesary queries on saving items
+- Update messages catalog
+- Minor bug fixes.
+
 ## 4.2.2 (2019-03-21)
 
 ### Features:
